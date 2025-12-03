@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* FIX: This prevents horizontal scrollbar caused by animations */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+@layer base {
+  body {
+    background-color: #E6DEF7;
+    @apply dark:bg-dark-bg text-gray-800 dark:text-dark-text transition-colors duration-300;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .dark body {
+    background-color: #1a1a2e;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, #7C5FBE, #9B7EDE, #5A7FC8);
+  }
+  
+  .text-gradient-dark {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, #9B7EDE, #B595DE, #6B9ADE);
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-lg bg-white/70 dark:bg-dark-surface/70 border border-white/20 dark:border-dark-surface-light/20;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-2xl;
+  }
+  
+  .section-divider {
+    width: 6rem;
+    height: 0.25rem;
+    margin: 3rem auto;
+    border-radius: 9999px;
+    background-image: linear-gradient(to right, #9B7EDE, #B595DE, #6B9ADE);
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #E6DEF7;
+}
+.dark ::-webkit-scrollbar-track {
+  @apply bg-dark-surface;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #7C5FBE;
+  @apply dark:bg-dark-surface-light rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #9B7EDE;
+}
