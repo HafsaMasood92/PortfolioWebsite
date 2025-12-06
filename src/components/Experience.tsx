@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { FaArrowLeft, FaCalendarAlt, FaMapMarkerAlt, FaBriefcase, FaGlobe, FaRocket, FaArrowRight, FaExternalLinkAlt, FaInstagram } from 'react-icons/fa'
+import { FaArrowLeft, FaCalendarAlt, FaMapMarkerAlt, FaBriefcase, FaGlobe, FaRocket, FaArrowRight, FaInstagram } from 'react-icons/fa'
 
 type CategoryType = 'internships' | 'fellowship' | 'startups' | null
 
