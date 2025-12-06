@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { FaArrowLeft, FaGraduationCap, FaCode, FaChartLine, FaRobot, FaExternalLinkAlt, FaArrowRight } from 'react-icons/fa'
+import { FaArrowLeft, FaGraduationCap, FaCode, FaChartLine, FaRobot, FaExternalLinkAlt } from 'react-icons/fa'
 
 type CategoryType = 'education' | 'mern' | 'marketing' | 'automation' | null
 
