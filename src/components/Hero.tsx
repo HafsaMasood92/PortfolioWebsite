@@ -1,21 +1,9 @@
 import { motion } from 'framer-motion'
 import { FaArrowDown } from 'react-icons/fa'
-import { useState, useEffect } from 'react'
 
 const Hero = () => {
-  const jobTitle = "Computer Systems Engineer";
-  const description = "Crafting scalable web applications, engineering reliable systems, and automating workflows with precision and creativity.".split(" ");
-  const [displayedText, setDisplayedText] = useState("");
-  const typingSpeed = 50; // milliseconds per character
-
-  useEffect(() => {
-    if (displayedText.length < jobTitle.length) {
-      const timer = setTimeout(() => {
-        setDisplayedText(jobTitle.slice(0, displayedText.length + 1));
-      }, typingSpeed);
-      return () => clearTimeout(timer);
-    }
-  }, [displayedText]);
+  const jobTitle = "Computer Systems Engineer".split(" ");
+  const description = "Building robust full-stack applications and optimizing performance through automation.".split(" ");
 
   return (
     <section
@@ -28,7 +16,7 @@ const Hero = () => {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute top-20 left-10 w-72 h-72 bg-pastel-purple/30 dark:bg-pastel-purple/10 rounded-full blur-3xl"
+          className="absolute top-20 left-10 w-48 h-48 sm:w-72 sm:h-72 bg-pastel-purple/30 dark:bg-pastel-purple/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             x: [0, 50, 0],
@@ -41,7 +29,7 @@ const Hero = () => {
           }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-pastel-blue/30 dark:bg-pastel-blue/10 rounded-full blur-3xl"
+          className="absolute bottom-20 right-10 w-64 h-64 sm:w-96 sm:h-96 bg-pastel-blue/30 dark:bg-pastel-blue/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
             x: [0, -50, 0],
@@ -54,7 +42,7 @@ const Hero = () => {
           }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 w-80 h-80 bg-pastel-lavender/30 dark:bg-pastel-lavender/10 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/2 w-56 h-56 sm:w-80 sm:h-80 bg-pastel-lavender/30 dark:bg-pastel-lavender/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.1, 1],
             rotate: [0, 180, 360],
@@ -74,8 +62,9 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
+          {/* 1. Name: Whitespace nowrap ensures it stays on one line */}
           <motion.h1
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-4 text-gradient dark:text-gradient-dark"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-4 text-gradient dark:text-gradient-dark whitespace-nowrap"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -83,22 +72,27 @@ const Hero = () => {
             Hafsa Masood
           </motion.h1>
           
-          {/* Word-by-Word Animation for Title */}
-          <div className="text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-gray-700 dark:text-dark-text mb-8 h-12 flex items-center justify-center">
-            <span>{displayedText}</span>
-            {displayedText.length < jobTitle.length && (
+          {/* 2. Job Title: Flex container with no wrap to force single line */}
+          <div className="flex justify-center flex-nowrap whitespace-nowrap text-lg sm:text-3xl md:text-4xl font-display font-semibold text-gray-700 dark:text-dark-text mb-8 overflow-hidden">
+            {jobTitle.map((word, index) => (
               <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ duration: 0.5, repeat: Infinity }}
-                className="ml-1"
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.5 + (index * 0.2), 
+                  ease: "easeOut"
+                }}
+                className="inline-block mr-1.5 sm:mr-2"
               >
-                |
+                {word}
               </motion.span>
-            )}
+            ))}
           </div>
           
-          {/* UPDATED: Word-by-Word Animation for Description */}
-          <div className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-dark-muted max-w-3xl mx-auto mb-12 leading-relaxed">
+          {/* Description */}
+          <div className="text-base sm:text-xl md:text-2xl text-gray-600 dark:text-dark-muted max-w-3xl mx-auto mb-12 leading-relaxed px-2">
             {description.map((word, index) => (
               <motion.span
                 key={index}
@@ -106,10 +100,10 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.3,
-                  delay: 1.5 + (index * 0.05), // Adjusted to start after typewriter effect
+                  delay: 1.2 + (index * 0.05),
                   ease: "easeOut"
                 }}
-                className="inline-block mr-1.5"
+                className="inline-block mr-1"
               >
                 {word}
               </motion.span>
@@ -118,10 +112,10 @@ const Hero = () => {
 
           <motion.a
             href="#about"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full glass-effect text-gray-700 dark:text-dark-text font-semibold hover:scale-105 transition-all shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 rounded-full glass-effect text-gray-700 dark:text-dark-text font-semibold text-sm sm:text-base hover:scale-105 transition-all shadow-lg hover:shadow-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.5 }} // Delayed until text finishes
+            transition={{ duration: 0.8, delay: 2.5 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { FaArrowLeft, FaGraduationCap, FaCode, FaChartLine, FaRobot } from 'react-icons/fa'
+import { FaArrowLeft, FaGraduationCap, FaCode, FaChartLine, FaRobot, FaExternalLinkAlt, FaArrowRight } from 'react-icons/fa'
 
 type CategoryType = 'education' | 'mern' | 'marketing' | 'automation' | null
 
@@ -9,6 +9,7 @@ interface MainCategory {
   id: CategoryType
   title: string
   subtitle: string
+  description: string 
   color: 'purple' | 'green' | 'blue' | 'pink'
   icon: React.ReactNode
 }
@@ -18,6 +19,7 @@ interface SkillDetail {
   title: string
   description: string
   color: 'purple' | 'green' | 'blue' | 'pink' | 'lavender' | 'mint' | 'peach'
+  link?: string
 }
 
 const About = () => {
@@ -25,11 +27,13 @@ const About = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>(null)
 
+  // Combined all categories into one list for the single column layout
   const mainCategories: MainCategory[] = [
     {
       id: 'education',
       title: 'Education',
-      subtitle: 'Mehran University of Engineering and Technology, Jamshoro',
+      subtitle: 'Mehran UET, Jamshoro',
+      description: 'Building a strong foundation in computer systems, algorithms, and engineering principles.',
       color: 'purple',
       icon: <FaGraduationCap />
     },
@@ -37,6 +41,7 @@ const About = () => {
       id: 'mern',
       title: 'MERN Stack',
       subtitle: 'Full-Stack Web Development',
+      description: 'Creating dynamic, scalable web applications with MongoDB, Express, React, and Node.js.',
       color: 'green',
       icon: <FaCode />
     },
@@ -44,6 +49,7 @@ const About = () => {
       id: 'marketing',
       title: 'Digital Marketing',
       subtitle: 'SEO & Growth Strategy',
+      description: 'Driving growth and visibility through strategic SEO, content planning, and analytics.',
       color: 'blue',
       icon: <FaChartLine />
     },
@@ -51,6 +57,7 @@ const About = () => {
       id: 'automation',
       title: 'Automation',
       subtitle: 'n8n & Chatbots',
+      description: 'Streamlining workflows and building intelligent chatbots using n8n and no-code tools.',
       color: 'pink',
       icon: <FaRobot />
     }
@@ -126,14 +133,16 @@ const About = () => {
       title: 'No-Code Chatbots',
       description:
         'I build no-code chatbots for WhatsApp and websites, enabling automated conversations, lead handling, customer support, and data collection. These bots enhance user engagement and reduce response time for businesses.',
-      color: 'lavender'
+      color: 'lavender',
+      link: 'https://www.fiverr.com/maazmasoodrajp/build-a-custom-faq-chatbot-for-your-website-or-business?context_referrer=tailored_homepage_perseus&source=recently_viewed_gigs&ref_ctx_id=5ca89ac81c3841ce880feceea4784f80&context=recommendation&pckg_id=1&pos=3&context_alg=recently_viewed&seller_online=true&imp_id=9c2cf8ab-9d32-456d-a611-9c5e308e7504'
     },
     {
       id: 'fiverr',
       title: 'Fiverr Projects',
       description:
         'I have delivered multiple automation and chatbot projects on Fiverr, helping clients improve operational efficiency through intelligent workflows, API integrations, and custom automation setups with measurable results.',
-      color: 'green'
+      color: 'green',
+      link: 'https://www.fiverr.com/maazmasoodrajp/build-a-custom-faq-chatbot-for-your-website-or-business?context_referrer=tailored_homepage_perseus&source=recently_viewed_gigs&ref_ctx_id=5ca89ac81c3841ce880feceea4784f80&context=recommendation&pckg_id=1&pos=3&context_alg=recently_viewed&seller_online=true&imp_id=9c2cf8ab-9d32-456d-a611-9c5e308e7504'
     }
   ];
 
@@ -164,7 +173,6 @@ const About = () => {
     const targetColor = map[color] || 'pastel-purple';
 
     return {
-      // Reverted: No border on hover, just shadow and bg tint
       container: `bg-white dark:bg-dark-surface 
                   border border-white/50 dark:border-white/5
                   hover:bg-${targetColor}/5 dark:hover:bg-${targetColor}/10
@@ -236,75 +244,70 @@ const About = () => {
     setSelectedCategory(null)
   }
 
+  // Component to render a category card
+  const CategoryCard = ({ category }: { category: MainCategory }) => {
+    const style = getFrontCardStyle(category.color)
+    return (
+      <motion.div
+        key={category.id}
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        whileHover={{ scale: 1.01, x: 5 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={() => handleCategoryClick(category.id)}
+        className={`
+          group cursor-pointer rounded-2xl p-6
+          ${style.container}
+          transition-all duration-300 ease-out
+          flex flex-col justify-center w-full
+        `}
+      >
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className={`p-3 rounded-full ${style.iconBg} text-xl flex-shrink-0 transition-colors duration-300`}>
+              {category.icon}
+            </div>
+            <div>
+              <h3 className={`text-xl font-display font-bold mb-1 transition-colors duration-300 ${style.title}`}>
+                {category.title}
+              </h3>
+              <p className={`text-sm font-medium ${style.subtitle}`}>
+                {category.subtitle}
+              </p>
+            </div>
+          </div>
+          <div className={`text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:translate-x-1`}>
+              →
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
+
   return (
     <section
       id="about"
-      className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+      className="py-20 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-pastel-purple-light/50 via-pastel-lavender-light/50 to-pastel-blue-light/50 dark:from-dark-bg dark:via-dark-surface dark:to-dark-surface-light transition-all duration-300"
       ref={ref}
     >
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-pastel-purple-light via-pastel-lavender-light to-pastel-blue-light dark:from-dark-bg dark:via-dark-surface dark:to-dark-surface-light"></div>
-      
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute top-20 left-10 w-72 h-72 bg-pastel-purple/30 dark:bg-pastel-purple/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-pastel-blue/30 dark:bg-pastel-blue/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 w-80 h-80 bg-pastel-lavender/30 dark:bg-pastel-lavender/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.1, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      </div>
-
-      <div className="container mx-auto max-w-7xl relative z-10">
-        <div className="text-center mb-12">
+      <div className="container mx-auto max-w-7xl">
+        <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4 text-gradient dark:text-gradient-dark">
             About Me
           </h2>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-20">
           
-          {/* --- LEFT SIDE: IMAGE --- */}
+          {/* --- LEFT SIDE: STATIC IMAGE (Outside AnimatePresence) --- */}
           <motion.div 
-            className="w-full lg:w-4/12 flex justify-center lg:justify-start"
+            className="w-full lg:w-4/12 flex justify-center lg:justify-start lg:sticky lg:top-24"
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8 }}
           >
             <div className="relative group w-full max-w-xs">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50 dark:border-white/10 aspect-[3/4] ml-8">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50 dark:border-white/10 aspect-[3/4] mt-6 ml-2">
                 <img 
                   src="/MyProfile.png" 
                   alt="Profile" 
@@ -314,131 +317,90 @@ const About = () => {
             </div>
           </motion.div>
 
-
-          {/* --- RIGHT SIDE: CARDS & CONTENT --- */}
-          <motion.div 
-            className="w-full lg:w-8/12"
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-
-            {/* Back Button */}
-            <AnimatePresence>
-              {selectedCategory && (
-                <motion.button
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  onClick={handleBack}
-                  className="mb-8 flex items-center gap-2 px-5 py-2 rounded-xl bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 font-medium hover:border-pastel-purple hover:text-pastel-purple transition-all shadow-sm"
-                  whileHover={{ scale: 1.02, x: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FaArrowLeft className="text-sm" />
-                  <span>Back to Categories</span>
-                </motion.button>
-              )}
-            </AnimatePresence>
-
-            {/* Main Categories View - ONE COLUMN NOW */}
+          {/* --- RIGHT SIDE: DYNAMIC CONTENT (Cards / Details) --- */}
+          <div className="w-full lg:w-8/12">
             <AnimatePresence mode="wait">
-              {!selectedCategory && (
+              {!selectedCategory ? (
+                // LIST VIEW: 4 Cards stacked in 1 column
                 <motion.div
-                  key="main-categories"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                  key="main-list"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.5 }}
-                  className="flex flex-col gap-4"
+                  className="flex flex-col gap-6"
                 >
-                  {mainCategories.map((category, index) => {
-                    const style = getFrontCardStyle(category.color)
-                    
-                    return (
-                      <motion.div
-                        key={category.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        whileHover={{ scale: 1.01, x: 5 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => handleCategoryClick(category.id)}
-                        className={`
-                          group cursor-pointer rounded-2xl p-6
-                          ${style.container}
-                          transition-all duration-300 ease-out
-                          flex flex-col justify-center w-full
-                        `}
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <div className="flex items-center gap-4">
-                            {/* Icon Container */}
-                            <div className={`p-3 rounded-full ${style.iconBg} text-xl flex-shrink-0 transition-colors duration-300`}>
-                              {category.icon}
-                            </div>
-                            
-                            <div>
-                              <h3 className={`text-xl font-display font-bold mb-1 transition-colors duration-300 ${style.title}`}>
-                                {category.title}
-                              </h3>
-                              <p className={`text-sm font-medium ${style.subtitle}`}>
-                                {category.subtitle}
-                              </p>
-                            </div>
-                          </div>
-                          <div className={`text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:translate-x-1`}>
-                             →
-                          </div>
-                        </div>
-                      </motion.div>
-                    )
-                  })}
+                  {mainCategories.map((category) => (
+                    <CategoryCard key={category.id} category={category} />
+                  ))}
                 </motion.div>
-              )}
-
-              {/* Skill Details View */}
-              {selectedCategory && (
+              ) : (
+                // DETAIL VIEW
                 <motion.div
-                  key={`details-${selectedCategory}`}
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                  key="details-view"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.5 }}
-                  className="flex flex-col gap-4"
                 >
-                  {getSkillDetails(selectedCategory).map((detail, index) => {
-                    const colors = getDetailCardStyle(detail.color)
-                    
-                    return (
-                      <motion.div
-                        key={detail.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        whileHover={{ scale: 1.01, x: 5 }}
-                        className={`
-                          rounded-2xl p-6 shadow-sm backdrop-blur-sm
-                          border-l-4
-                          ${colors.bg}
-                          ${colors.border}
-                          ${colors.hover}
-                          transition-all duration-300
-                        `}
-                      >
-                        <h3 className={`text-lg font-display font-bold mb-2 ${colors.text}`}>
-                          {detail.title}
-                        </h3>
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
-                          {detail.description}
-                        </p>
-                      </motion.div>
-                    )
-                  })}
+                  {/* Back Button */}
+                  <motion.button
+                    onClick={handleBack}
+                    className="mb-8 flex items-center gap-2 px-5 py-2 rounded-xl bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 font-medium hover:border-pastel-purple hover:text-pastel-purple transition-all shadow-sm"
+                    whileHover={{ scale: 1.02, x: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FaArrowLeft className="text-sm" />
+                    <span>Back to Categories</span>
+                  </motion.button>
+
+                  <div className="flex flex-col gap-6">
+                    {getSkillDetails(selectedCategory).map((detail, index) => {
+                      const colors = getDetailCardStyle(detail.color)
+                      return (
+                        <motion.div
+                          key={detail.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: index * 0.1 }}
+                          whileHover={{ scale: 1.01, x: 5 }}
+                          className={`
+                            rounded-2xl p-6 shadow-sm backdrop-blur-sm
+                            border-l-4
+                            ${colors.bg}
+                            ${colors.border}
+                            ${colors.hover}
+                            transition-all duration-300
+                          `}
+                        >
+                          <h3 className={`text-lg font-display font-bold mb-2 ${colors.text}`}>
+                            {detail.title}
+                          </h3>
+                          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
+                            {detail.description}
+                          </p>
+                          
+                          {/* Link Section */}
+                          {detail.link && (
+                            <div className="mt-4 pt-3 border-t border-black/5 dark:border-white/10">
+                              <a 
+                                href={detail.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`inline-flex items-center gap-2 text-sm font-semibold hover:underline ${colors.text}`}
+                              >
+                                View on Fiverr <FaExternalLinkAlt className="text-xs" />
+                              </a>
+                            </div>
+                          )}
+                        </motion.div>
+                      )
+                    })}
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.div>
+          </div>
 
         </div>
       </div>

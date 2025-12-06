@@ -53,50 +53,34 @@ const Projects = () => {
     {
       id: 'iot-incubator',
       title: 'IoT Smart Egg Incubator',
-      description: 'Final Year Project - Automated temperature, humidity, and egg rotation system for optimal incubation environment.',
-      technologies: ['ESP32', 'Blynk App', 'Sensors', 'IoT'],
+      description: 'Final Year Project designed to automate and monitor the incubation process with high precision. This system integrates multiple sensors to maintain optimal conditions for hatching, significantly reducing manual intervention and increasing success rates compared to traditional methods.',
+      technologies: ['ESP32 Microcontroller', 'Blynk IoT Platform', 'DHT11 Sensor', 'Servo Motors', 'Relay Modules', 'C++'],
       features: [
-        'Automated temperature control',
-        'Humidity monitoring',
-        'Egg rotation mechanism',
-        'Stable environment for incubation'
+        'Automated PID temperature control loop',
+        'Real-time humidity monitoring & adjustment',
+        'Automatic egg rotation mechanism every 4 hours',
+        'Mobile app alerts via Blynk for critical status updates'
       ],
-      color: 'purple',
-      github: '#',
-      demo: '#'
+      color: 'purple'
+      // GitHub and Demo links removed for hardware project
     }
   ]
 
   const softwareProjects: Project[] = [
     {
-      id: 'mern-ecommerce',
-      title: 'E-Commerce Platform',
-      description: 'Full-stack e-commerce application with user authentication, product management, shopping cart, and payment integration.',
-      technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'REST API'],
+      id: 'academia',
+      title: 'Academia - Learning Platform',
+      description: 'A dynamic frontend educational website built with React and Tailwind CSS. It offers a wide array of professional courses including Web Development, Data Science, and Digital Marketing, allowing users to browse curricula and enroll in their desired fields.',
+      technologies: ['React', 'Tailwind CSS', 'JavaScript', 'Vercel'],
       features: [
-        'User authentication & authorization',
-        'Product catalog with search & filter',
-        'Shopping cart & checkout',
-        'Order management system'
+        'Diverse course catalog (Web, Data Science, Marketing)',
+        'Seamless user enrollment interface',
+        'Modern, fully responsive UI design',
+        'Interactive course details and previews'
       ],
-      color: 'blue',
+      color: 'mint',
       github: '#',
-      demo: '#'
-    },
-    {
-      id: 'task-automation',
-      title: 'Task Automation System',
-      description: 'Workflow automation platform built with n8n for connecting APIs and streamlining business processes.',
-      technologies: ['n8n', 'API Integration', 'Webhooks', 'Automation'],
-      features: [
-        'Multi-platform API integration',
-        'Automated workflow triggers',
-        'Data synchronization',
-        'Custom automation scripts'
-      ],
-      color: 'pink',
-      github: '#',
-      demo: '#'
+      demo: 'https://academia-omega-one.vercel.app/'
     }
   ]
 
@@ -122,7 +106,6 @@ const Projects = () => {
     const targetColor = map[color] || 'pastel-purple';
 
     return {
-      // Made larger and more distinct
       container: `bg-white dark:bg-dark-surface 
                   border border-gray-100 dark:border-white/5
                   hover:border-${targetColor} dark:hover:border-${targetColor}
@@ -135,7 +118,7 @@ const Projects = () => {
   }
 
   const getDetailCardStyle = (color: string) => {
-    const targetColor = `pastel-${color}`; // Simple mapping
+    const targetColor = `pastel-${color}`;
 
     return {
       // White card with colored TOP border + Hover Outline effect
@@ -163,7 +146,7 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      // UPDATED: Hero Gradient Background
+      // Hero Gradient Background
       className="py-20 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-pastel-purple-light via-pastel-lavender-light to-pastel-blue-light dark:from-dark-bg dark:via-dark-surface dark:to-dark-surface-light transition-all duration-300"
       ref={ref}
     >
@@ -173,13 +156,11 @@ const Projects = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
         >
-          {/* Heading - Size and Color kept as requested */}
+          {/* Heading */}
           <h2 className="text-4xl sm:text-5xl md:text-5xl font-display font-bold text-center mb-12 text-gradient dark:text-gradient-dark">
             Projects
           </h2>
           
-          {/* UPDATED: Divider line removed */}
-
           {/* Back Button */}
           <AnimatePresence>
             {selectedCategory && (
@@ -207,7 +188,6 @@ const Projects = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -50, scale: 0.9 }}
                 transition={{ duration: 0.5 }}
-                // UPDATED: Wider grid (max-w-5xl) and larger cards
                 className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
               >
                 {mainCategories.map((category, index) => {

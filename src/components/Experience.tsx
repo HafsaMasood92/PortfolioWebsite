@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { FaArrowLeft, FaCalendarAlt, FaMapMarkerAlt, FaBriefcase, FaGlobe, FaRocket, FaArrowRight } from 'react-icons/fa'
+import { FaArrowLeft, FaCalendarAlt, FaMapMarkerAlt, FaBriefcase, FaGlobe, FaRocket, FaArrowRight, FaExternalLinkAlt, FaInstagram } from 'react-icons/fa'
 
 type CategoryType = 'internships' | 'fellowship' | 'startups' | null
 
@@ -21,6 +21,7 @@ interface SubExperience {
   location?: string
   description: string
   color: 'purple' | 'blue' | 'pink' | 'lavender' | 'mint' | 'peach'
+  links?: { text: string; url: string; icon: React.ReactNode }[] // Added links property
 }
 
 const Experience = () => {
@@ -100,7 +101,12 @@ const Experience = () => {
       period: '2025–Present',
       location: 'Remote',
       description: 'Managed SEO, content strategy, social media planning, and digital growth for a tech e-commerce startup.',
-      color: 'pink'
+      color: 'blue',
+      // Added Links Here
+      links: [
+        { text: 'Website', url: 'https://thegadgetryofficial.com/', icon: <FaGlobe /> },
+        { text: 'Instagram', url: 'https://www.instagram.com/_gadgetryofficial/', icon: <FaInstagram /> }
+      ]
     },
     {
       id: 'ieee',
@@ -127,7 +133,6 @@ const Experience = () => {
 
   // --- STYLING LOGIC (Professional) ---
   
-  // Logic for the Main Category Cards (Front View)
   const getFrontCardStyle = (color: string) => {
     const map: Record<string, string> = {
       purple: 'pastel-purple',
@@ -137,21 +142,20 @@ const Experience = () => {
     const targetColor = map[color] || 'pastel-purple';
 
     return {
-      // Made larger (p-10), added iconBg, improved shadows
+      // Bigger Enhanced Cards
       container: `bg-white dark:bg-dark-surface 
                   border border-gray-100 dark:border-white/5
                   hover:border-${targetColor} dark:hover:border-${targetColor}
                   hover:bg-${targetColor}/5 dark:hover:bg-${targetColor}/10
-                  hover:shadow-2xl hover:shadow-${targetColor}/20`,
+                  hover:shadow-2xl hover:shadow-${targetColor}/20
+                  relative overflow-hidden`,
       iconBg: `bg-${targetColor}/10 text-${targetColor}-dark dark:text-${targetColor}`,
       title: `text-gray-900 dark:text-white group-hover:text-${targetColor}`,
       subtitle: `text-gray-500 dark:text-dark-muted`
     }
   }
 
-  // Logic for the Detail Cards (Inner View)
   const getDetailCardStyle = (color: string) => {
-    // Mapping keys to Tailwind colors defined in config
     const map: Record<string, string> = {
       purple: 'pastel-purple',
       blue: 'pastel-blue',
@@ -163,17 +167,15 @@ const Experience = () => {
     const targetColor = map[color] || 'pastel-purple';
 
     return {
-        // Clean white card with colored left border + Hover Outline added
         container: `bg-white dark:bg-dark-surface shadow-sm hover:shadow-lg hover:shadow-${targetColor}/10
                     border border-gray-100 dark:border-white/5
                     border-l-4 border-l-${targetColor}
                     hover:border-${targetColor} dark:hover:border-${targetColor}
                     hover:bg-${targetColor}/5 dark:hover:bg-${targetColor}/10
                     transition-all duration-300`,
-        // Title text matches the accent color
         title: `text-${targetColor} dark:text-${targetColor}`,
-        // Icons match the accent color
-        icon: `text-${targetColor}`
+        icon: `text-${targetColor}`,
+        text: `text-gray-900 dark:text-white`
     }
   }
 
@@ -198,7 +200,7 @@ const Experience = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl md:text-5xl font-display font-bold text-center mb-6 text-gray-900 dark:text-white">
+          <h2 className="text-4xl sm:text-5xl md:text-5xl font-display font-bold text-center mb-6 text-gradient dark:text-gradient-dark">
             Experience
           </h2>
           {/* Purple Divider Line */}
@@ -222,7 +224,7 @@ const Experience = () => {
             )}
           </AnimatePresence>
 
-          {/* Main Categories View (Enhanced) */}
+          {/* Main Categories View (Enhanced & Bigger) */}
           <AnimatePresence mode="wait">
             {!selectedCategory && (
               <motion.div
@@ -249,7 +251,6 @@ const Experience = () => {
                         group cursor-pointer rounded-3xl p-10 
                         ${style.container}
                         transition-all duration-300 ease-out
-                        relative overflow-hidden
                       `}
                     >
                       <div className="flex flex-col h-full justify-between gap-6 relative z-10">
@@ -277,7 +278,7 @@ const Experience = () => {
                         </div>
                       </div>
 
-                      {/* Decorative Background Blob */}
+                      {/* Decorative Blob */}
                       <div className={`absolute -bottom-10 -right-10 w-32 h-32 rounded-full opacity-5 blur-2xl transition-all duration-500 group-hover:scale-150 bg-${category.color}-500`}></div>
                     </motion.div>
                   )
@@ -330,6 +331,23 @@ const Experience = () => {
                       <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
                         {exp.description}
                       </p>
+
+                      {/* Display Links if available */}
+                      {exp.links && (
+                        <div className="mt-4 pt-3 border-t border-black/5 dark:border-white/10 flex flex-wrap gap-4">
+                          {exp.links.map((link, idx) => (
+                            <a 
+                              key={idx}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`inline-flex items-center gap-2 text-sm font-semibold hover:underline ${style.title}`}
+                            >
+                              {link.text} <span className="text-xs">{link.icon}</span>
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </motion.div>
                   )
                 })}
