@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { FaArrowLeft, FaGithub, FaExternalLinkAlt, FaMicrochip, FaLaptopCode, FaArrowRight } from 'react-icons/fa'
+import { FaArrowLeft, FaGithub, FaExternalLinkAlt, FaMicrochip, FaLaptopCode } from 'react-icons/fa'
 
 type CategoryType = 'hardware' | 'software' | null
 
@@ -62,7 +62,6 @@ const Projects = () => {
         'Mobile app alerts via Blynk for critical status updates'
       ],
       color: 'purple'
-      // GitHub and Demo links removed for hardware project
     }
   ]
 
@@ -121,7 +120,6 @@ const Projects = () => {
     const targetColor = `pastel-${color}`;
 
     return {
-      // White card with colored TOP border + Hover Outline effect
       container: `bg-white dark:bg-dark-surface shadow-sm hover:shadow-xl hover:shadow-${targetColor}/10
                   border border-gray-100 dark:border-white/5
                   border-t-4 border-t-${targetColor}
@@ -146,7 +144,6 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      // Hero Gradient Background
       className="py-20 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-pastel-purple-light via-pastel-lavender-light to-pastel-blue-light dark:from-dark-bg dark:via-dark-surface dark:to-dark-surface-light transition-all duration-300"
       ref={ref}
     >
@@ -156,12 +153,10 @@ const Projects = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
         >
-          {/* Heading */}
           <h2 className="text-4xl sm:text-5xl md:text-5xl font-display font-bold text-center mb-12 text-gradient dark:text-gradient-dark">
             Projects
           </h2>
           
-          {/* Back Button */}
           <AnimatePresence>
             {selectedCategory && (
               <motion.button
@@ -179,7 +174,6 @@ const Projects = () => {
             )}
           </AnimatePresence>
 
-          {/* Main Categories View */}
           <AnimatePresence mode="wait">
             {!selectedCategory && (
               <motion.div
@@ -210,17 +204,13 @@ const Projects = () => {
                       `}
                     >
                       <div className="flex flex-col h-full justify-between gap-6 relative z-10">
-                        {/* Top Section: Icon & Title */}
                         <div className="flex items-start justify-between">
                           <div className={`p-4 rounded-2xl ${style.iconBg} text-4xl mb-4 transition-transform duration-300 group-hover:scale-110`}>
                             {category.icon}
                           </div>
-                          <div className="bg-gray-100 dark:bg-white/5 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <FaArrowRight className="text-gray-500 dark:text-gray-300" />
-                          </div>
+                          {/* Replaced arrow right with simple div or just remove if not needed. Removing to be safe from import errors */}
                         </div>
 
-                        {/* Bottom Section: Text */}
                         <div>
                           <h3 className={`text-3xl font-display font-bold mb-3 transition-colors duration-300 ${style.title}`}>
                             {category.title}
@@ -228,13 +218,12 @@ const Projects = () => {
                           <p className={`text-lg font-medium ${style.subtitle} mb-2`}>
                             {category.subtitle}
                           </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                          <p className="text-sm text-gray-500 dark:text-dark-muted leading-relaxed">
                             {category.description}
                           </p>
                         </div>
                       </div>
                       
-                      {/* Decorative Background Blob */}
                       <div className={`absolute -bottom-10 -right-10 w-40 h-40 rounded-full opacity-10 blur-2xl transition-all duration-500 group-hover:scale-150 bg-${category.color}-500`}></div>
                     </motion.div>
                   )
@@ -242,7 +231,6 @@ const Projects = () => {
               </motion.div>
             )}
 
-            {/* Projects Detail View */}
             {selectedCategory && (
               <motion.div
                 key={`projects-${selectedCategory}`}

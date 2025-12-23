@@ -187,18 +187,18 @@ const About = () => {
     }
   }
 
-  // Simplified styles for the List View (No Card Box)
+  // FIXED: Added missing getListStyle function
   const getListStyle = (color: string) => {
-    const colorMap: Record<string, string> = {
+    const map: Record<string, string> = {
       purple: 'pastel-purple',
+      green: 'pastel-mint',
       blue: 'pastel-blue',
       pink: 'pastel-pink',
       lavender: 'pastel-lavender',
       mint: 'pastel-mint',
-      peach: 'pastel-peach',
-      green: 'pastel-mint' 
+      peach: 'pastel-peach'
     };
-    const target = colorMap[color] || 'pastel-purple';
+    const target = map[color] || 'pastel-purple';
 
     return {
       border: `border-${target}`,
@@ -263,8 +263,7 @@ const About = () => {
     >
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
-          {/* UPDATED: Black title and Green Underline (Divider) */}
-          <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4 text-slate-900 dark:text-white">
+          <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4 text-gradient dark:text-gradient-dark">
             About Me
           </h2>
           <div className="section-divider"></div>
