@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { FaArrowLeft, FaGraduationCap, FaCode, FaChartLine, FaRobot, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaArrowLeft, FaGraduationCap, FaCode, FaChartLine, FaRobot, FaExternalLinkAlt, FaArrowRight, FaGlobe, FaInstagram } from 'react-icons/fa'
 
 type CategoryType = 'education' | 'mern' | 'marketing' | 'automation' | null
 
@@ -20,6 +20,7 @@ interface SkillDetail {
   description: string
   color: 'purple' | 'green' | 'blue' | 'pink' | 'lavender' | 'mint' | 'peach'
   link?: string
+  links?: { text: string; url: string; icon: React.ReactNode }[]
 }
 
 const About = () => {
@@ -27,7 +28,6 @@ const About = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>(null)
 
-  // Combined all categories into one list for the single column layout
   const mainCategories: MainCategory[] = [
     {
       id: 'education',
@@ -67,7 +67,7 @@ const About = () => {
     {
       id: 'degree',
       title: 'Bachelor of Computer Systems Engineering',
-      description: 'Completed my Bachelors degree from Mehran University of Engineering and Technology, Jamshoro      (2021-2025 ) CGPA: 3.18/4.0',
+      description: 'Completed my Bachelors degree from Mehran University of Engineering and Technology, Jamshoro (2021-2025) with a CGPA of 3.18/4.0. The curriculum provided in-depth knowledge of embedded systems, software engineering, and computer architecture.',
       color: 'purple'
     },
   ]
@@ -116,7 +116,11 @@ const About = () => {
       title: 'Digital Marketing Lead at Gadgetry',
       description:
         'At Gadgetry, I lead SEO optimization, product visibility improvements, and content planning. I manage the brand’s digital presence to increase traffic, enhance discoverability, and support early customer acquisition for the tech e-commerce startup.',
-      color: 'peach'
+      color: 'peach',
+      links: [
+        { text: 'Website', url: 'https://thegadgetryofficial.com/', icon: <FaGlobe /> },
+        { text: 'Instagram', url: 'https://www.instagram.com/_gadgetryofficial/', icon: <FaInstagram /> }
+      ]
     }
   ];
 
@@ -183,57 +187,24 @@ const About = () => {
     }
   }
 
-  const getDetailCardStyle = (color: string) => {
-    const colorMap: Record<string, {
-      bg: string
-      text: string
-      border: string
-      hover: string
-    }> = {
-      purple: {
-        bg: 'bg-pastel-purple/10 dark:bg-pastel-purple/10',
-        text: 'text-pastel-purple-dark dark:text-pastel-purple',
-        border: 'border-pastel-purple-dark/20 dark:border-pastel-purple/20',
-        hover: 'hover:bg-pastel-purple/20 dark:hover:bg-pastel-purple/20'
-      },
-      blue: {
-        bg: 'bg-pastel-blue/10 dark:bg-pastel-blue/10',
-        text: 'text-pastel-blue-dark dark:text-pastel-blue',
-        border: 'border-pastel-blue-dark/20 dark:border-pastel-blue/20',
-        hover: 'hover:bg-pastel-blue/20 dark:hover:bg-pastel-blue/20'
-      },
-      pink: {
-        bg: 'bg-pastel-pink/10 dark:bg-pastel-pink/10',
-        text: 'text-pastel-pink-dark dark:text-pastel-pink',
-        border: 'border-pastel-pink-dark/20 dark:border-pastel-pink/20',
-        hover: 'hover:bg-pastel-pink/20 dark:hover:bg-pastel-pink/20'
-      },
-      lavender: {
-        bg: 'bg-pastel-lavender/10 dark:bg-pastel-lavender/10',
-        text: 'text-pastel-lavender-dark dark:text-pastel-lavender',
-        border: 'border-pastel-lavender-dark/20 dark:border-pastel-lavender/20',
-        hover: 'hover:bg-pastel-lavender/20 dark:hover:bg-pastel-lavender/20'
-      },
-      mint: {
-        bg: 'bg-pastel-mint/10 dark:bg-pastel-mint/10',
-        text: 'text-pastel-mint-dark dark:text-pastel-mint',
-        border: 'border-pastel-mint-dark/20 dark:border-pastel-mint/20',
-        hover: 'hover:bg-pastel-mint/20 dark:hover:bg-pastel-mint/20'
-      },
-      peach: {
-        bg: 'bg-pastel-peach/10 dark:bg-pastel-peach/10',
-        text: 'text-pastel-peach-dark dark:text-pastel-peach',
-        border: 'border-pastel-peach-dark/20 dark:border-pastel-peach/20',
-        hover: 'hover:bg-pastel-peach/20 dark:hover:bg-pastel-peach/20'
-      },
-      green: {
-        bg: 'bg-pastel-mint/10 dark:bg-pastel-mint/10',
-        text: 'text-pastel-mint-dark dark:text-pastel-mint',
-        border: 'border-pastel-mint-dark/20 dark:border-pastel-mint/20',
-        hover: 'hover:bg-pastel-mint/20 dark:hover:bg-pastel-mint/20'
-      }
+  // Simplified styles for the List View (No Card Box)
+  const getListStyle = (color: string) => {
+    const colorMap: Record<string, string> = {
+      purple: 'pastel-purple',
+      blue: 'pastel-blue',
+      pink: 'pastel-pink',
+      lavender: 'pastel-lavender',
+      mint: 'pastel-mint',
+      peach: 'pastel-peach',
+      green: 'pastel-mint' 
+    };
+    const target = colorMap[color] || 'pastel-purple';
+
+    return {
+      border: `border-${target}`,
+      title: `text-${target}-dark dark:text-${target}`,
+      hoverBg: `hover:bg-${target}/5`
     }
-    return colorMap[color] || colorMap.purple
   }
 
   const handleCategoryClick = (categoryId: CategoryType) => {
@@ -244,7 +215,7 @@ const About = () => {
     setSelectedCategory(null)
   }
 
-  // Component to render a category card
+  // Component to render a category card (Main View)
   const CategoryCard = ({ category }: { category: MainCategory }) => {
     const style = getFrontCardStyle(category.color)
     return (
@@ -287,121 +258,122 @@ const About = () => {
   return (
     <section
       id="about"
-      className="py-20 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-pastel-purple-light/50 via-pastel-lavender-light/50 to-pastel-blue-light/50 dark:from-dark-bg dark:via-dark-surface dark:to-dark-surface-light transition-all duration-300"
+      className="py-20 px-4 sm:px-6 lg:px-8 relative bg-pastel-purple/[0.03] dark:bg-dark-bg transition-all duration-300"
       ref={ref}
     >
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4 text-gradient dark:text-gradient-dark">
+          {/* UPDATED: Black title and Green Underline (Divider) */}
+          <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4 text-slate-900 dark:text-white">
             About Me
           </h2>
+          <div className="section-divider"></div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-20">
-          
-          {/* --- LEFT SIDE: STATIC IMAGE (Outside AnimatePresence) --- */}
-          <motion.div 
-            className="w-full lg:w-4/12 flex justify-center lg:justify-start lg:sticky lg:top-24"
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="relative group w-full max-w-xs">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50 dark:border-white/10 aspect-[3/4] mt-6 ml-2">
-                <img 
-                  src="/MyProfile.png" 
-                  alt="Profile" 
-                  className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-            </div>
-          </motion.div>
-
-          {/* --- RIGHT SIDE: DYNAMIC CONTENT (Cards / Details) --- */}
-          <div className="w-full lg:w-8/12">
-            <AnimatePresence mode="wait">
-              {!selectedCategory ? (
-                // LIST VIEW: 4 Cards stacked in 1 column
-                <motion.div
-                  key="main-list"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{ duration: 0.5 }}
-                  className="flex flex-col gap-6"
+        {/* Dynamic Content Container */}
+        <div className="w-full max-w-5xl mx-auto">
+          <AnimatePresence mode="wait">
+            {!selectedCategory ? (
+              // VIEW 1: CATEGORY CARDS (2x2 Grid)
+              <motion.div
+                key="main-list"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+              >
+                {mainCategories.map((category) => (
+                  <CategoryCard key={category.id} category={category} />
+                ))}
+              </motion.div>
+            ) : (
+              // VIEW 2: DETAILS LIST
+              <motion.div
+                key="details-view"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col h-full"
+              >
+                {/* Back Button */}
+                <motion.button
+                  onClick={handleBack}
+                  className="mb-8 self-start flex items-center gap-2 px-5 py-2 rounded-xl bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 font-medium hover:border-pastel-purple hover:text-pastel-purple transition-all shadow-sm"
+                  whileHover={{ scale: 1.02, x: -5 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {mainCategories.map((category) => (
-                    <CategoryCard key={category.id} category={category} />
-                  ))}
-                </motion.div>
-              ) : (
-                // DETAIL VIEW
-                <motion.div
-                  key="details-view"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {/* Back Button */}
-                  <motion.button
-                    onClick={handleBack}
-                    className="mb-8 flex items-center gap-2 px-5 py-2 rounded-xl bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 font-medium hover:border-pastel-purple hover:text-pastel-purple transition-all shadow-sm"
-                    whileHover={{ scale: 1.02, x: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaArrowLeft className="text-sm" />
-                    <span>Back to Categories</span>
-                  </motion.button>
+                  <FaArrowLeft className="text-sm" />
+                  <span>Back</span>
+                </motion.button>
 
-                  <div className="flex flex-col gap-6">
-                    {getSkillDetails(selectedCategory).map((detail, index) => {
-                      const colors = getDetailCardStyle(detail.color)
-                      return (
-                        <motion.div
-                          key={detail.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.5, delay: index * 0.1 }}
-                          whileHover={{ scale: 1.01, x: 5 }}
-                          className={`
-                            rounded-2xl p-6 shadow-sm backdrop-blur-sm
-                            border-l-4
-                            ${colors.bg}
-                            ${colors.border}
-                            ${colors.hover}
-                            transition-all duration-300
-                          `}
-                        >
-                          <h3 className={`text-lg font-display font-bold mb-2 ${colors.text}`}>
-                            {detail.title}
-                          </h3>
-                          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
-                            {detail.description}
-                          </p>
-                          
-                          {/* Link Section */}
-                          {detail.link && (
-                            <div className="mt-4 pt-3 border-t border-black/5 dark:border-white/10">
-                              <a 
-                                href={detail.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`inline-flex items-center gap-2 text-sm font-semibold hover:underline ${colors.text}`}
-                              >
-                                View on Fiverr <FaExternalLinkAlt className="text-xs" />
-                              </a>
-                            </div>
-                          )}
-                        </motion.div>
-                      )
-                    })}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                <div className="flex flex-col space-y-8 pl-2">
+                  {getSkillDetails(selectedCategory).map((detail, index) => {
+                    const styles = getListStyle(detail.color)
+                    
+                    return (
+                      <motion.div
+                        key={detail.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                        className={`
+                          relative pl-6 sm:pl-8 border-l-4 ${styles.border}
+                          ${styles.hoverBg} transition-colors duration-300 rounded-r-xl p-4
+                        `}
+                      >
+                        <div className="flex flex-col gap-2">
+                           <div className="flex items-center gap-3">
+                              <span className={`text-xs font-bold px-2 py-0.5 rounded bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400`}>
+                                0{index + 1}
+                              </span>
+                              <h3 className={`text-xl font-display font-bold ${styles.title}`}>
+                                {detail.title}
+                              </h3>
+                           </div>
+                           
+                           <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base">
+                             {detail.description}
+                           </p>
 
+                           {/* Links */}
+                           {detail.links && (
+                              <div className="flex flex-wrap gap-4 mt-2">
+                                {detail.links.map((link, idx) => (
+                                  <a 
+                                    key={idx}
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`inline-flex items-center gap-2 text-sm font-semibold hover:underline ${styles.title}`}
+                                  >
+                                    {link.text} <FaExternalLinkAlt className="text-xs" />
+                                  </a>
+                                ))}
+                              </div>
+                           )}
+
+                           {detail.link && (
+                              <div className="mt-2">
+                                <a 
+                                  href={detail.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className={`inline-flex items-center gap-2 text-sm font-semibold hover:underline ${styles.title}`}
+                                >
+                                  View on Fiverr <FaExternalLinkAlt className="text-xs" />
+                                </a>
+                              </div>
+                           )}
+                        </div>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>

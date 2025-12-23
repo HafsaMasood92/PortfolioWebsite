@@ -2,21 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* FIX: This prevents horizontal scrollbar caused by animations */
 html, body {
   overflow-x: hidden;
   width: 100%;
+  scroll-behavior: smooth;
 }
 
 @layer base {
   body {
-    background-color: #E6DEF7;
-    @apply dark:bg-dark-bg text-gray-800 dark:text-dark-text transition-colors duration-300;
+    /* GLOBAL BACKGROUND: Slate-50 (Light) & Slate-900 (Dark) */
+    @apply bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300;
     font-family: 'Inter', sans-serif;
-  }
-  
-  .dark body {
-    background-color: #1a1a2e;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -25,59 +21,46 @@ html, body {
 }
 
 @layer utilities {
+  /* Green -> Slate Gradient for Light Mode */
   .text-gradient {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    background-image: linear-gradient(to right, #7C5FBE, #9B7EDE, #5A7FC8);
+    background-image: linear-gradient(to right, #10B981, #059669, #334155);
   }
   
+  /* Emerald -> Teal Gradient for Dark Mode */
   .text-gradient-dark {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    background-image: linear-gradient(to right, #9B7EDE, #B595DE, #6B9ADE);
+    background-image: linear-gradient(to right, #34D399, #2DD4BF, #F8FAFC);
   }
   
+  /* Glass Effect using Slate colors */
   .glass-effect {
-    @apply backdrop-blur-lg bg-white/70 dark:bg-dark-surface/70 border border-white/20 dark:border-dark-surface-light/20;
+    @apply backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700;
   }
   
-  .card-hover {
-    @apply transition-all duration-300 hover:scale-105 hover:shadow-2xl;
-  }
-  
+  /* Green Divider Line */
   .section-divider {
-    width: 6rem;
-    height: 0.25rem;
-    margin: 3rem auto;
-    border-radius: 9999px;
-    background-image: linear-gradient(to right, #9B7EDE, #B595DE, #6B9ADE);
+    @apply w-24 h-1.5 bg-emerald-500 rounded-full mx-auto mb-12;
   }
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
+/* Custom Scrollbar - Matching Green Theme */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #E6DEF7;
-}
-.dark ::-webkit-scrollbar-track {
-  @apply bg-dark-surface;
+  @apply bg-slate-100 dark:bg-slate-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #7C5FBE;
-  @apply dark:bg-dark-surface-light rounded-full;
+  @apply bg-emerald-500 dark:bg-emerald-700 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #9B7EDE;
+  @apply bg-emerald-600 dark:bg-emerald-600;
 }

@@ -1,22 +1,21 @@
 import { motion } from 'framer-motion'
-import { FaArrowDown } from 'react-icons/fa'
 
 const Hero = () => {
   const jobTitle = "Computer Systems Engineer".split(" ");
-  const description = "Building robust full-stack applications and optimizing performance through automation.".split(" ");
+  const description = "Crafting scalable web applications, engineering reliable systems, and automating workflows with precision and creativity.".split(" ");
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 lg:pt-0"
     >
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-pastel-purple-light via-pastel-lavender-light to-pastel-blue-light dark:from-dark-bg dark:via-dark-surface dark:to-dark-surface-light"></div>
+      {/* Background - Clean White/Slate with subtle blobs */}
+      <div className="absolute inset-0 bg-slate-50 dark:bg-dark-bg"></div>
       
-      {/* Animated Background Elements */}
+      {/* Animated Background Blobs (Subtle Green/Teal) */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute top-20 left-10 w-48 h-48 sm:w-72 sm:h-72 bg-pastel-purple/30 dark:bg-pastel-purple/10 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             x: [0, 50, 0],
@@ -29,7 +28,7 @@ const Hero = () => {
           }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-64 h-64 sm:w-96 sm:h-96 bg-pastel-blue/30 dark:bg-pastel-blue/10 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-teal-400/20 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
             x: [0, -50, 0],
@@ -41,98 +40,99 @@ const Hero = () => {
             ease: "easeInOut",
           }}
         />
-        <motion.div
-          className="absolute top-1/2 left-1/2 w-56 h-56 sm:w-80 sm:h-80 bg-pastel-lavender/30 dark:bg-pastel-lavender/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.1, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
       </div>
 
-      {/* Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* 1. Name: Whitespace nowrap ensures it stays on one line */}
-          <motion.h1
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-4 text-gradient dark:text-gradient-dark whitespace-nowrap"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Hafsa Masood
-          </motion.h1>
+      {/* Main Content */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
           
-          {/* 2. Job Title: Flex container with no wrap to force single line */}
-          <div className="flex justify-center flex-nowrap whitespace-nowrap text-lg sm:text-3xl md:text-4xl font-display font-semibold text-gray-700 dark:text-dark-text mb-8 overflow-hidden">
-            {jobTitle.map((word, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.5 + (index * 0.2), 
-                  ease: "easeOut"
-                }}
-                className="inline-block mr-1.5 sm:mr-2"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </div>
-          
-          {/* Description */}
-          <div className="text-base sm:text-xl md:text-2xl text-gray-600 dark:text-dark-muted max-w-3xl mx-auto mb-12 leading-relaxed px-2">
-            {description.map((word, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.3,
-                  delay: 1.2 + (index * 0.05),
-                  ease: "easeOut"
-                }}
-                className="inline-block mr-1"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </div>
-
-          <motion.a
-            href="#about"
-            className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 rounded-full glass-effect text-gray-700 dark:text-dark-text font-semibold text-sm sm:text-base hover:scale-105 transition-all shadow-lg hover:shadow-xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.5 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          {/* --- LEFT SIDE: TEXT CONTENT --- */}
+          <motion.div 
+            className="w-full lg:w-1/2 text-center lg:text-left"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            Explore My Work
+            {/* 1. NAME - Size reduced to Medium */}
+            <motion.h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 text-slate-800 dark:text-white tracking-tight whitespace-nowrap"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Hafsa Masood
+            </motion.h1>
             
-          </motion.a>
-        </motion.div>
-      </div>
+            {/* 2. JOB TITLE (Animated Text) - Size reduced */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-x-3 text-xl sm:text-2xl md:text-3xl font-medium text-emerald-600 dark:text-emerald-400 mb-8">
+              {jobTitle.map((word, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.5 + (index * 0.1), 
+                    ease: "easeOut"
+                  }}
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </div>
+            
+            {/* 3. DESCRIPTION (Animated Text) - Size reduced */}
+            <div className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+              {description.map((word, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: 1.0 + (index * 0.03),
+                    ease: "easeOut"
+                  }}
+                  className="inline-block mr-1.5"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <FaArrowDown className="text-gray-600 dark:text-dark-muted text-xl" />
-      </motion.div>
+            {/* 4. CTA BUTTON */}
+            <motion.a
+              href="#about"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-emerald-600 text-white font-semibold text-lg shadow-lg hover:bg-emerald-700 hover:shadow-emerald-500/30 transition-all transform hover:-translate-y-1"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 2.2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Explore My Work
+            </motion.a>
+          </motion.div>
+
+          {/* --- RIGHT SIDE: IMAGE --- */}
+          <motion.div 
+            className="w-full lg:w-1/2 flex justify-center lg:justify-end"
+            initial={{ opacity: 0, x: 50, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full p-2 border-4 border-white/50 dark:border-white/10 shadow-2xl bg-white/20 backdrop-blur-sm">
+              <div className="w-full h-full rounded-full overflow-hidden bg-emerald-100 dark:bg-slate-800">
+                <img 
+                  src="/MyProfile.png" 
+                  alt="Hafsa Masood" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
     </section>
   )
 }

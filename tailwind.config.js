@@ -23,32 +23,45 @@ export default {
   theme: {
     extend: {
       colors: {
+        // MAPPED TO PROFESSIONAL GREEN & WHITE THEME
         pastel: {
-          purple: '#9B7EDE',
-          'purple-dark': '#7C5FBE',
-          'purple-light': '#E6DEF7',
-          mint: '#6BC4A6',
-          'mint-dark': '#4FA385',
-          'mint-light': '#E0F5EF',
-          blue: '#6B9ADE',
-          'blue-dark': '#5A7FC8',
-          'blue-light': '#E0EDF7',
-          lavender: '#B595DE',
-          'lavender-dark': '#9B7EDE',
-          'lavender-light': '#F0E8F7',
-          peach: '#D49B7E',
-          'peach-dark': '#BE7C5F',
-          'peach-light': '#F7E6DE',
-          pink: '#D97E9B',
-          'pink-dark': '#C75A7A',
-          'pink-light': '#F7DEE6',
+          // Previously Purple -> Now PRIMARY GREEN (Emerald)
+          purple: '#10B981',        // Emerald 500 (Primary Brand Color)
+          'purple-dark': '#047857', // Emerald 700 (Hover/Dark Text)
+          'purple-light': '#ECFDF5',// Emerald 50 (Very light background)
+
+          // Previously Mint -> Now ACCENT GREEN (Teal)
+          mint: '#14B8A6',          // Teal 500
+          'mint-dark': '#0F766E',   // Teal 700
+          'mint-light': '#F0FDFA',  // Teal 50
+
+          // Previously Blue -> Now CORPORATE SLATE/NAVY (Professional Contrast)
+          blue: '#334155',          // Slate 700
+          'blue-dark': '#0F172A',   // Slate 900
+          'blue-light': '#F1F5F9',  // Slate 100
+
+          // Previously Lavender -> Now NEUTRAL GRAY
+          lavender: '#94A3B8',      // Slate 400
+          'lavender-dark': '#475569',
+          'lavender-light': '#F8FAFC',
+
+          // Previously Peach -> Now SUBTLE LIME
+          peach: '#84CC16',         // Lime 500
+          'peach-dark': '#4D7C0F',
+          'peach-light': '#F7FEE7',
+
+          // Previously Pink -> Now ALERT/HIGHLIGHT (Rose - kept for variety but muted)
+          pink: '#F43F5E',          
+          'pink-dark': '#BE123C',
+          'pink-light': '#FFF1F2',
         },
+        // Dark Mode: Deep Forest/Slate
         dark: {
-          bg: '#1a1a2e',
-          surface: '#16213e',
-          'surface-light': '#0f3460',
-          text: '#eaeaea',
-          muted: '#b8b8b8',
+          bg: '#022C22',            // Very dark green/black
+          surface: '#064E3B',       // Dark Emerald
+          'surface-light': '#065F46', 
+          text: '#ECFDF5',          // Light Mint text
+          muted: '#A7F3D0',         // Soft Green text
         }
       },
       fontFamily: {
